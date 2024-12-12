@@ -2,7 +2,8 @@ package com.example.StudentGradeMS.Controller;
 
 import com.example.StudentGradeMS.Repository.StudentRepository;
 import com.example.StudentGradeMS.Service.Interface.IStudentService;
-import com.example.StudentGradeMS.User.Student;
+import com.example.StudentGradeMS.Model.Student;
+import com.example.StudentGradeMS.Service.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/student")
 public class StudentController {
     @Autowired
-    private IStudentService studentService;
+    private StudentService studentService;
 
     @GetMapping
     public List<Student>getAllStudents(){

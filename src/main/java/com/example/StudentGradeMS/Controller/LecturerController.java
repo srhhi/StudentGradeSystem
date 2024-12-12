@@ -1,8 +1,8 @@
 package com.example.StudentGradeMS.Controller;
 
-import com.example.StudentGradeMS.Repository.LecturerRepository;
+import com.example.StudentGradeMS.Model.Lecturer;
 import com.example.StudentGradeMS.Service.Interface.ILecturerService;
-import com.example.StudentGradeMS.User.Lecturer;
+import com.example.StudentGradeMS.Service.Service.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/lecturer")
 public class LecturerController {
     @Autowired
-    private ILecturerService lecturerService;
+    private LecturerService lecturerService;
 
     @GetMapping
     public List<Lecturer>getAllLecturers(){
