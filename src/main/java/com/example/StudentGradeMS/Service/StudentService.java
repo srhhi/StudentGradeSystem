@@ -1,4 +1,4 @@
-package com.example.StudentGradeMS.Service.Interface;
+package com.example.StudentGradeMS.Service;
 
 import com.example.StudentGradeMS.Repository.StudentRepository;
 import com.example.StudentGradeMS.User.Student;
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IStudentService {
+public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public List<Student> getAllStudents(){
+    public List<Student>getAllStudents(){
         return studentRepository.findAll();
     }
     public Student getStudentById(int studentNo){
