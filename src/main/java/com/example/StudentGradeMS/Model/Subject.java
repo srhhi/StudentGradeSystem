@@ -14,6 +14,7 @@ public class Subject {
     private String code;
     private String name;
     private float creditHours;
+    private String lecturerName;
 
     public Long getSubjectId() {
         return subjectId;
@@ -45,5 +46,13 @@ public class Subject {
 
     public void setCreditHours(float creditHours) {
         this.creditHours = creditHours;
+    }
+
+    public String getLecturerName() {
+        return lecturerName;
+    }
+
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName;
     }
 }

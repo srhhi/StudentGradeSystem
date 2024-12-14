@@ -33,6 +33,7 @@ public class SubjectService {
         existingSubject.setCode(subjectDetails.getCode());
         existingSubject.setName(subjectDetails.getName());
         existingSubject.setCreditHours(subjectDetails.getCreditHours());
+        existingSubject.setLecturerName(subjectDetails.getLecturerName());
         //Tambah lecturer if lecturer siap
 
         return subjectRepository.save(existingSubject);
