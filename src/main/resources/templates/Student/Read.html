@@ -8,7 +8,7 @@
 <body>
 <div class="container mt-5">
     <form th:action="@{/student/read}" th:object="${student}" method="post">
-        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{id }" />
         <fieldset class="border p-4">
             <legend class="w-auto">Student - Read</legend>
             <div class="mb-3">

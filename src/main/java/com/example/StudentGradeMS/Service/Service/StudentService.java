@@ -23,7 +23,6 @@ public class StudentService {
     }
     public Student updateStudent(int studentNo, Student studentDetails){
         Student student= studentRepository.findById(studentNo).orElse(null);
-
         if (student != null){
             student.setStudentNo(studentDetails.getStudentNo());
             student.setName(studentDetails.getName());

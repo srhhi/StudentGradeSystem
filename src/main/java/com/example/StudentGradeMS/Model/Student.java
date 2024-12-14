@@ -14,35 +14,35 @@ public class Student {
     private String faculty;
     private String course;
 
-    public void setStudentNo(int studentNo) {
-        this.studentNo = studentNo;
-    }
-
     public int getStudentNo() {
         return studentNo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStudentNo(int studentNo) {
+        this.studentNo = studentNo;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFaculty() {
         return faculty;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     public String getCourse() {
         return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 }
