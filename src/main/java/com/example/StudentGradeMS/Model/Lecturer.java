@@ -10,22 +10,32 @@ public class Lecturer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
+    private Long id;
     private String name;
     private String faculty;
 
-    public void setName(String name) {
-        this.name = name;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getFaculty() {
         return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 }

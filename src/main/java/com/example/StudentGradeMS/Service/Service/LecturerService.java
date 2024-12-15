@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class LecturerService{
+
     @Autowired
     private LecturerRepository lecturerRepository;
 
@@ -16,22 +17,23 @@ public class LecturerService{
         return lecturerRepository.findAll();
     }
 
-    public Lecturer getLecturerByName(String name){
-        return lecturerRepository.findById(name).orElse(null);
+    public Lecturer getLecturerById(Long id){
+        return lecturerRepository.findById(id).orElse(null);
     }
     public Lecturer createLecturer(Lecturer lecturer){
         return lecturerRepository.save(lecturer);
     }
-    public Lecturer updateLecturer(String name, Lecturer lecturerDetails){
-        Lecturer lecturer= lecturerRepository.findById(name).orElse(null);
+    public Lecturer updateLecturer(Long id, Lecturer lecturerDetails){
+        Lecturer lecturer= lecturerRepository.findById(id).orElse(null);
         if (lecturer !=null){
+            lecturer.setName(lecturerDetails.getName());
             lecturer.setFaculty(lecturerDetails.getFaculty());
             return lecturerRepository.save(lecturer);
         }
         return null;
     }
-    public void deleteLecturer(String name){
-        lecturerRepository.deleteById(name);
+    public void deleteLecturer(Long id){
+        lecturerRepository.deleteById(id);
     }
 
 }
