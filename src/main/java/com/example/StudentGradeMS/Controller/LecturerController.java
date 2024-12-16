@@ -18,14 +18,44 @@ public class LecturerController {
     @Autowired
     private LecturerService lecturerService;
 
-    // API Endpoint: Get all lecturers
+    @GetMapping
+    public String listLecturers(Model model) {
+        List<Lecturer> lecturers = lecturerService.getAllLecturers();
+        model.addAttribute("lecturers", lecturers);
+        return "lecturer/index";
+    }
+
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("lecturer", new Lecturer());
+        return "lecturer/add";
+    }
+
+    @PostMapping("/add")
+    public String addLecturer(@ModelAttribute Lecturer lecturer) {
+        lecturerService.createLecturer(lecturer);
+        return "redirect:/lecturer";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Lecturer lecturer = lecturerService.getLecturerById(id);
+        model.addAttribute("lecturer", lecturer);
+        return "lecturer/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateLecturer(@PathVariable Long id, @ModelAttribute Lecturer lecturer) {
+        lecturerService.updateLecturer(id, lecturer);
+        return "redirect:/lecturer";
+    }
+
     @GetMapping("/api")
     @ResponseBody
     public List<Lecturer> getAllLecturersApi() {
         return lecturerService.getAllLecturers();
     }
 
-    // API Endpoint: Get lecturer by ID
     @GetMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<Lecturer> getLecturerByIdApi(@PathVariable Long id) {
@@ -37,7 +67,6 @@ public class LecturerController {
         }
     }
 
-    // API Endpoint: Create a new lecturer
     @PostMapping("/api")
     @ResponseBody
     public ResponseEntity<Lecturer> createLecturerApi(@RequestBody Lecturer lecturer) {
@@ -49,7 +78,6 @@ public class LecturerController {
         }
     }
 
-    // API Endpoint: Update an existing lecturer by Id
     @PutMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<Lecturer> updateLecturerApi(@PathVariable Long id, @RequestBody Lecturer lecturerDetails) {
@@ -65,7 +93,6 @@ public class LecturerController {
         }
     }
 
-    // API Endpoint: Delete a lecturer
     @DeleteMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<HttpStatus> deleteLecturerApi(@PathVariable Long id) {
@@ -75,42 +102,5 @@ public class LecturerController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-    //---------------------------------------------------////---------------------------------------------------//
-    // View Endpoint: List all lecturers
-    @GetMapping
-    public String listLecturers(Model model) {
-        List<Lecturer> lecturers = lecturerService.getAllLecturers();
-        model.addAttribute("lecturers", lecturers);
-        return "lecturer/index";
-    }
-
-    // View Endpoint: Show add form
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("lecturer", new Lecturer());
-        return "lecturer/add";
-    }
-
-    // View Endpoint: Handle add form submission
-    @PostMapping("/add")
-    public String addLecturer(@ModelAttribute Lecturer lecturer) {
-        lecturerService.createLecturer(lecturer);
-        return "redirect:/lecturer";
-    }
-
-    // View Endpoint: Show edit form
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Long id, Model model) {
-        Lecturer lecturer = lecturerService.getLecturerById(id);
-        model.addAttribute("lecturer", lecturer);
-        return "lecturer/edit";
-    }
-
-    // View Endpoint: Handle edit form submission
-    @PostMapping("/edit/{id}")
-    public String updateLecturer(@PathVariable Long id, @ModelAttribute Lecturer lecturer) {
-        lecturerService.updateLecturer(id, lecturer);
-        return "redirect:/lecturer";
     }
 }
