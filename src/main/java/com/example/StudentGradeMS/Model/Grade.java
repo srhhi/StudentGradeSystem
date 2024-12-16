@@ -15,14 +15,14 @@ public class Grade {
     private String status;
     private float gpa;
 
-    public Grade (char dagrade,
-                  String dastatus,
-                  float dagpa)
-    {
-        this.grade=dagrade;
-        this.status = dastatus;
-        this.gpa = dagpa;
-    }
+//    public Grade (char dagrade,
+//                  String dastatus,
+//                  float dagpa)
+//    {
+//        this.grade=dagrade;
+//        this.status = dastatus;
+//        this.gpa = dagpa;
+//    }
 
     // Getter and Setter for id
     public long getId() {

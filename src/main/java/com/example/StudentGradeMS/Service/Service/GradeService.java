@@ -1,49 +1,36 @@
 package com.example.StudentGradeMS.Service.Service;
 
-import com.example.StudentGradeMS.Model.Grade;
 import com.example.StudentGradeMS.Repository.GradeRepository;
-import com.example.StudentGradeMS.Service.Interface.IGradeService;
+import com.example.StudentGradeMS.Model.Grade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class GradeService implements IGradeService {
-    private final GradeRepository gradeRepository;
+public class GradeService  {
     @Autowired
-    public GradeService(GradeRepository gradeRepository){
-        this.gradeRepository = gradeRepository;
-    }
-    @Override
-    public Grade saveGrade(Grade grade){
-        return gradeRepository.save(grade);
-    }
+    private GradeRepository gradeRepository;
 
-    @Override
-    public List<Grade> getAllGrades() {
+    public List<Grade>getAllGrades(){
         return gradeRepository.findAll();
     }
-
-    @Override
-    public Optional<Grade> getGradeById(Long id) {
-        return gradeRepository.findById(id);
+    public Grade getGradesById(long id){
+        return gradeRepository.findById(id).orElse(null);
     }
-
-    @Override
-    public Grade updateGrade(Long id, Grade grade){
-        return gradeRepository.findById(id)
-                .map(existingGrade -> {
-                    existingGrade.setGrade(grade.getGrade());
-                    existingGrade.setStatus(grade.getStatus());
-                    existingGrade.setGpa(grade.getGpa());
-                    return gradeRepository.save(existingGrade);
-                })
-                .orElseThrow(() -> new RuntimeException("Grade not found with id: " + id));
+    public Grade createGrade (Grade grade){
+        return gradeRepository.save(grade);
     }
-
-    @Override
+    public Grade updateGrade(long id, Grade newGrade){
+        Grade grade = gradeRepository.findById(id).orElse(null);
+        if (grade != null){
+            grade.setGrade(newGrade.getGrade());
+            grade.setStatus(newGrade.getStatus());
+            grade.setGpa(newGrade.getGpa());
+            return gradeRepository.save(grade);
+        }
+        return null;
+    }
     public void deleteGrade(Long id) {
         gradeRepository.deleteById(id);
     }
