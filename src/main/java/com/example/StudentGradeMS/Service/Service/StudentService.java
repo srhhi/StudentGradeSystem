@@ -16,13 +16,13 @@ public class StudentService {
         return studentRepository.findAll();
     }
     public Student getStudentById(int studentNo){
-        return studentRepository.findById(studentNo).orElse(null);
+        return studentRepository.findById(studentNo).orElseThrow(() -> new RuntimeException("Student not found with studentNo " + studentNo));
     }
     public Student createStudent (Student student){
         return studentRepository.save(student);
     }
     public Student updateStudent(int studentNo, Student studentDetails){
-        Student student= studentRepository.findById(studentNo).orElse(null);
+        Student student= studentRepository.findById(studentNo).orElseThrow(() -> new RuntimeException("Student not found with studentNo " + studentNo));
         if (student != null){
             student.setStudentNo(studentDetails.getStudentNo());
             student.setName(studentDetails.getName());

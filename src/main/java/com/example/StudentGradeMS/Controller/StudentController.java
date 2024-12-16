@@ -18,17 +18,47 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    // API Endpoint: Get all students
+    @GetMapping
+    public String listStudents(Model model) {
+        List<Student> students = studentService.getAllStudents();
+        model.addAttribute("students", students);
+        return "student/index";
+    }
+
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+        model.addAttribute("student", new Student());
+        return "student/add";
+    }
+
+    @PostMapping("/add")
+    public String addStudent(@ModelAttribute Student student) {
+        studentService.createStudent(student);
+        return "redirect:/student";
+    }
+
+    @GetMapping("/edit/{studentNo}")
+    public String showEditForm(@PathVariable int studentNo, Model model) {
+        Student student = studentService.getStudentById(studentNo);
+        model.addAttribute("student", student);
+        return "student/edit";
+    }
+
+    @PostMapping("/edit/{studentNo}")
+    public String updateStudent(@PathVariable int studentNo, @ModelAttribute Student student) {
+        studentService.updateStudent(studentNo, student);
+        return "redirect:/student";
+    }
+
     @GetMapping("/api")
     @ResponseBody
-    public List<Student> getAllStudent() {
+    public List<Student> getAllStudentsApi() {
         return studentService.getAllStudents();
     }
 
-    // API Endpoint: Get students by ID
     @GetMapping("/api/{studentNo}")
     @ResponseBody
-    public ResponseEntity<Student> getStudentById(@PathVariable int studentNo) {
+    public ResponseEntity<Student> getStudentByIdApi(@PathVariable int studentNo) {
         Student student = studentService.getStudentById(studentNo);
         if (student != null) {
             return new ResponseEntity<>(student, HttpStatus.OK);
@@ -37,7 +67,6 @@ public class StudentController {
         }
     }
 
-    // API Endpoint: Create a new student
     @PostMapping("/api")
     @ResponseBody
     public ResponseEntity<Student> createStudentApi(@RequestBody Student student) {
@@ -49,7 +78,6 @@ public class StudentController {
         }
     }
 
-    // API Endpoint: Update an existing student by Id
     @PutMapping("/api/{studentNo}")
     @ResponseBody
     public ResponseEntity<Student> updateStudentApi(@PathVariable int studentNo, @RequestBody Student studentDetails) {
@@ -65,7 +93,6 @@ public class StudentController {
         }
     }
 
-    // API Endpoint: Delete a students
     @DeleteMapping("/api/{studentNo}")
     @ResponseBody
     public ResponseEntity<HttpStatus> deleteStudentApi(@PathVariable int studentNo) {
@@ -76,39 +103,4 @@ public class StudentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //---------------------------------------------------////---------------------------------------------------//
-    // View Endpoint: List all student
-    @GetMapping
-    public String listStudent(Model model) {
-        List<Student> students = studentService.getAllStudents();
-        model.addAttribute("students", students);
-        return "student/index";
-    }
-    // View Endpoint: Show add form
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("student", new Student());
-        return "student/add";
-    }
-    // View Endpoint: Handle add form submission
-    @PostMapping("/add")
-    public String addStudent(@ModelAttribute Student student) {
-        studentService.createStudent(student);
-        return "redirect:/student";
-    }
-    // View Endpoint: Show edit form
-    @GetMapping("/edit/{studentNo}")
-    public String showEditForm(@PathVariable int studentNo, Model model) {
-        Student student = studentService.getStudentById(studentNo);
-        model.addAttribute("student", student);
-        return "student/edit";
-    }
-    // View Endpoint: Handle edit form submission
-    @PostMapping("/edit/{studentNo}")
-    public String updateStudent(@PathVariable int studentNo, @ModelAttribute Student student) {
-        studentService.updateStudent(studentNo, student);
-        return "redirect:/student";
-    }
-
-
 }
