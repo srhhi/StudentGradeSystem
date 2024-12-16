@@ -18,6 +18,12 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
+    @GetMapping("/Grade/Index")
+    public String grade(Model model) {
+        model.addAttribute("page", "grade");
+        return "Index :: content"; // Use Thymeleaf fragment for content injection
+    }
+
     @GetMapping("/api")
     @ResponseBody
     public List<Grade> gerAllGrade(){
