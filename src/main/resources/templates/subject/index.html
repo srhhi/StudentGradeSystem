@@ -22,6 +22,7 @@
             <th>Code</th>
             <th>Name</th>
             <th>Credit Hours</th>
+            <th>Lecturer Name</th> <!-- Added Lecturer Name Column -->
             <th>Actions</th>
         </tr>
         </thead>
@@ -45,6 +46,7 @@
                 <td>${subject.code}</td>
                 <td>${subject.name}</td>
                 <td>${subject.creditHours}</td>
+                <td>${subject.lecturerName || 'N/A'}</td> <!-- Display Lecturer Name -->
                 <td>
                     <a href="/subject/edit/${subject.subjectId}" class="btn btn-warning">Edit</a>
                     <button class="btn btn-danger" onclick="deleteSubject(${subject.subjectId})">Delete</button>
