@@ -44,8 +44,9 @@ public class LoginController {
     }
 
     @GetMapping("/index")
-    public String showIndexPage() {
-        return "index"; // Show the index page after successful login
+    public String index(Model model) {
+        model.addAttribute("pageContent", "default");
+        return "index";
     }
 }
 

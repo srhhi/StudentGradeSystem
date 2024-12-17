@@ -1,5 +1,6 @@
 package com.example.StudentGradeMS.Controller;
 
+import com.example.StudentGradeMS.Model.Grade;
 import com.example.StudentGradeMS.Model.Subject;
 import com.example.StudentGradeMS.Service.Service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,14 @@ public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
+
+    @GetMapping("/index")
+    public String subjectIndex(Model model) {
+        List<Subject> subjects = subjectService.getAllSubjects();
+        model.addAttribute("subjects", subjects);
+        model.addAttribute("pageContent", "subject/index");
+        return "index";
+    }
 
     @GetMapping("/api")
     @ResponseBody

@@ -9,6 +9,7 @@
 <div class="container mt-5">
     <h1 class="text-center">Edit Student</h1>
     <form th:action="@{/student/edit/{studentNo}(studentNo=${student.studentNo})}" th:object="${student}" method="post">
+        <input type="hidden" th:field="*{id}" />
         <div class="mb-3">
             <label for="studentNo" class="form-label">Student No</label>
             <input type="text" class="form-control" id="studentNo" th:field="*{studentNo}" placeholder="Enter student number" readonly>
