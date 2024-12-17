@@ -1,6 +1,6 @@
 package com.example.StudentGradeMS.Controller;
 
-import com.example.StudentGradeMS.Model.Grade;
+
 import com.example.StudentGradeMS.Model.Lecturer;
 import com.example.StudentGradeMS.Service.Service.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ public class LecturerController {
     @Autowired
     private LecturerService lecturerService;
 
+    // Displays the lecturer index page with a list of all lecturers
     @GetMapping("/index")
     public String lecturerIndex(Model model) {
         List<Lecturer> lecturers = lecturerService.getAllLecturers();
@@ -27,6 +28,7 @@ public class LecturerController {
         return "index";
     }
 
+    // Lists all lecturers on the lecturer index page
     @GetMapping
     public String listLecturers(Model model) {
         List<Lecturer> lecturers = lecturerService.getAllLecturers();
@@ -34,18 +36,21 @@ public class LecturerController {
         return "lecturer/index";
     }
 
+    // Shows the form for adding a new lecturer
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("lecturer", new Lecturer());
         return "lecturer/add";
     }
 
+    // Handles the form submission for adding a new lecturer
     @PostMapping("/add")
     public String addLecturer(@ModelAttribute Lecturer lecturer) {
         lecturerService.createLecturer(lecturer);
         return "redirect:/lecturer";
     }
 
+    // Shows the form for editing an existing lecturer
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         Lecturer lecturer = lecturerService.getLecturerById(id);
@@ -53,18 +58,21 @@ public class LecturerController {
         return "lecturer/edit";
     }
 
+    // Handles the form submission for updating an existing lecturer
     @PostMapping("/edit/{id}")
     public String updateLecturer(@PathVariable Long id, @ModelAttribute Lecturer lecturer) {
         lecturerService.updateLecturer(id, lecturer);
         return "redirect:/lecturer";
     }
 
+    // Provides a list of all lecturers via an API endpoint
     @GetMapping("/api")
     @ResponseBody
     public List<Lecturer> getAllLecturersApi() {
         return lecturerService.getAllLecturers();
     }
 
+    // Provides details of a specific lecturer via an API endpoint
     @GetMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<Lecturer> getLecturerByIdApi(@PathVariable Long id) {
@@ -76,6 +84,7 @@ public class LecturerController {
         }
     }
 
+    // Handles the creation of a new lecturer via an API endpoint
     @PostMapping("/api")
     @ResponseBody
     public ResponseEntity<Lecturer> createLecturerApi(@RequestBody Lecturer lecturer) {
@@ -87,6 +96,7 @@ public class LecturerController {
         }
     }
 
+    // Handles the update of an existing lecturer via an API endpoint
     @PutMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<Lecturer> updateLecturerApi(@PathVariable Long id, @RequestBody Lecturer lecturerDetails) {
@@ -102,6 +112,7 @@ public class LecturerController {
         }
     }
 
+    // Handles the deletion of a lecturer via an API endpoint
     @DeleteMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<HttpStatus> deleteLecturerApi(@PathVariable Long id) {

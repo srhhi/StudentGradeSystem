@@ -12,15 +12,28 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    // Retrieves a list of all students from the repository
     public List<Student>getAllStudents(){
         return studentRepository.findAll();
     }
+
+    // Retrieves a student by their student number, throws an exception if not found
     public Student getStudentById(int studentNo){
         return studentRepository.findById(studentNo).orElseThrow(() -> new RuntimeException("Student not found with studentNo " + studentNo));
     }
-    public Student createStudent (Student student){
-        return studentRepository.save(student);
+
+    // Creates a new student record in the repository
+    public Student createStudent(Student student) {
+        try {
+            return studentRepository.save(student);
+        } catch (Exception e) {
+            // Log the exception details
+            System.out.println("Error saving student: " + e.getMessage());
+            throw e; // Rethrow for handling in controller
+        }
     }
+
+    // Updates an existing student record in the repository
     public Student updateStudent(int studentNo, Student studentDetails){
         Student student= studentRepository.findById(studentNo).orElseThrow(() -> new RuntimeException("Student not found with studentNo " + studentNo));
         if (student != null){
@@ -32,6 +45,8 @@ public class StudentService {
         }
         return null;
     }
+
+    // Deletes a student record by their student number from the repository
     public void deleteStudent(int studentNo){
         studentRepository.deleteById(studentNo);
     }

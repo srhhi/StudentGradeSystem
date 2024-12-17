@@ -1,6 +1,6 @@
 package com.example.StudentGradeMS.Controller;
 
-import com.example.StudentGradeMS.Model.Grade;
+
 import com.example.StudentGradeMS.Model.Student;
 import com.example.StudentGradeMS.Service.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    // Displays the student index page with a list of all students
     @GetMapping("/index")
     public String studentIndex(Model model) {
         List<Student> students = studentService.getAllStudents();
@@ -26,26 +27,33 @@ public class StudentController {
         model.addAttribute("pageContent", "student/index");
         return "index";
     }
-
+    // Lists all students on the student index page
     @GetMapping
     public String listStudents(Model model) {
         List<Student> students = studentService.getAllStudents();
         model.addAttribute("students", students);
         return "student/index";
     }
-
+    // Shows the form for adding a new student
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("student", new Student());
         return "student/add";
     }
 
+    // Handles the form submission for adding a new student
     @PostMapping("/add")
-    public String addStudent(@ModelAttribute Student student) {
-        studentService.createStudent(student);
-        return "redirect:/student";
+    public String addStudent(@ModelAttribute Student student, Model model) {
+        try {
+            studentService.createStudent(student);
+            return "redirect:/student";
+        } catch (Exception e) {
+            model.addAttribute("error", "Error occurred while adding student: " + e.getMessage());
+            return "student/add"; // Return to the add form on failure
+        }
     }
 
+    // Shows the form for editing an existing student
     @GetMapping("/edit/{studentNo}")
     public String showEditForm(@PathVariable int studentNo, Model model) {
         Student student = studentService.getStudentById(studentNo);
@@ -53,18 +61,21 @@ public class StudentController {
         return "student/edit";
     }
 
+    // Handles the form submission for updating an existing student
     @PostMapping("/edit/{studentNo}")
     public String updateStudent(@PathVariable int studentNo, @ModelAttribute Student student) {
         studentService.updateStudent(studentNo, student);
         return "redirect:/student";
     }
 
+    // Provides a list of all students via an API endpoint
     @GetMapping("/api")
     @ResponseBody
     public List<Student> getAllStudentsApi() {
         return studentService.getAllStudents();
     }
 
+    // Provides details of a specific student via an API endpoint
     @GetMapping("/api/{studentNo}")
     @ResponseBody
     public ResponseEntity<Student> getStudentByIdApi(@PathVariable int studentNo) {
@@ -76,6 +87,7 @@ public class StudentController {
         }
     }
 
+    // Handles the creation of a new student via an API endpoint
     @PostMapping("/api")
     @ResponseBody
     public ResponseEntity<Student> createStudentApi(@RequestBody Student student) {
@@ -87,6 +99,7 @@ public class StudentController {
         }
     }
 
+    // Handles the update of an existing student via an API endpoint
     @PutMapping("/api/{studentNo}")
     @ResponseBody
     public ResponseEntity<Student> updateStudentApi(@PathVariable int studentNo, @RequestBody Student studentDetails) {
@@ -102,6 +115,7 @@ public class StudentController {
         }
     }
 
+    // Handles the deletion of a student via an API endpoint
     @DeleteMapping("/api/{studentNo}")
     @ResponseBody
     public ResponseEntity<HttpStatus> deleteStudentApi(@PathVariable int studentNo) {
