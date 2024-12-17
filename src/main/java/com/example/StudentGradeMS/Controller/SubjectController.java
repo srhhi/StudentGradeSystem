@@ -1,10 +1,12 @@
 package com.example.StudentGradeMS.Controller;
 
 import com.example.StudentGradeMS.Model.Lecturer;
+import com.example.StudentGradeMS.Model.Grade;
 import com.example.StudentGradeMS.Model.Subject;
 import com.example.StudentGradeMS.Service.Service.LecturerService;
 import com.example.StudentGradeMS.Service.Service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,14 @@ public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
+
+    @GetMapping("/index")
+    public String subjectIndex(Model model) {
+        List<Subject> subjects = subjectService.getAllSubjects();
+        model.addAttribute("subjects", subjects);
+        model.addAttribute("pageContent", "subject/index");
+        return "index";
+    }
 
     @Autowired
     private LecturerService lecturerService;

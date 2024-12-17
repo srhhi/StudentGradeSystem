@@ -12,21 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/grades")
+@RequestMapping("/grade")
 public class GradeController {
 
     @Autowired
     private GradeService gradeService;
 
-    @GetMapping("/Grade/Index")
-    public String grade(Model model) {
-        model.addAttribute("page", "grade");
-        return "Index :: content"; // Use Thymeleaf fragment for content injection
+    @GetMapping("/index")
+    public String gradeIndex(Model model) {
+        List<Grade> grades = gradeService.getAllGrades();
+        model.addAttribute("grades", grades);
+        model.addAttribute("pageContent", "grade/index");
+        return "index";
     }
 
     @GetMapping("/api")
     @ResponseBody
-    public List<Grade> gerAllGrade(){
+    public List<Grade> getAllGrade(){
         return gradeService.getAllGrades();
     }
 
