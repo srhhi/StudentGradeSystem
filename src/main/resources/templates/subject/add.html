@@ -25,9 +25,14 @@
             <div class="mb-3">
                 <label for="lecturerName" class="form-label">Lecturer Name</label>
                 <select class="form-select" th:field="*{lecturerName}" id="lecturerName" required>
-                    <option th:each="lecturerName : ${lecturerNames}" th:value="${lecturerName}" th:text="${lecturerName}">Please Select</option>
+                    <option th:each="lecturerName : ${lecturerNames}"
+                            th:value="${lecturerName}"
+                            th:text="${lecturerName}">
+                        Please Select
+                    </option>
                 </select>
             </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </fieldset>
     </form>

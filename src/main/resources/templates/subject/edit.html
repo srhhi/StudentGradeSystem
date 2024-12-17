@@ -24,10 +24,15 @@
         </div>
         <div class="mb-3">
             <label for="lecturerName" class="form-label">Lecturer Name</label>
-            <select class="form-select" id="lecturerName" th:field="*{lecturerName}" required>
-                <option th:each="lecturer : ${lecturerNames}" th:value="${lecturer}" th:text="${lecturer}"></option>
+            <select class="form-select" th:field="*{lecturerName}" id="lecturerName" required>
+                <option th:each="lecturerName : ${lecturerNames}"
+                        th:value="${lecturerName}"
+                        th:text="${lecturerName}">
+                    Please Select
+                </option>
             </select>
         </div>
+
         <div class="text-end">
             <button type="submit" class="btn btn-primary">Save Changes</button>
             <a href="/subject" class="btn btn-secondary">Cancel</a>
