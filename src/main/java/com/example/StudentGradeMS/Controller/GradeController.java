@@ -25,7 +25,6 @@ public class GradeController {
         model.addAttribute("pageContent", "grade/index");
         return "index";
     }
-
     @GetMapping("/api")
     @ResponseBody
     public List<Grade> getAllGrade(){
@@ -80,6 +79,11 @@ public class GradeController {
 
     //---------------------------------------------------////---------------------------------------------------//
 
+    @GetMapping("/Grade/Index")
+    public String grade(Model model) {
+        model.addAttribute("page", "grade");
+        return "Index :: content"; // Use Thymeleaf fragment for content injection
+    }
     // View Endpoint: List all grade
     @GetMapping
     public String listGrades(Model model){
@@ -117,38 +121,4 @@ public class GradeController {
         return "redirect:/grade";
     }
 
-//    private GradeService gradeService;
-//
-//    @Autowired
-//    public GradeController(GradeService gradeService){
-//        this.gradeService = gradeService;
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<Grade> createGrade(@RequestBody Grade grade){
-//        return ResponseEntity.ok(gradeService.saveGrade(grade));
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<List<Grade>> getAllGrades(){
-//        return ResponseEntity.ok(gradeService.getAllGrades());
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Grade> getGradeById(@PathVariable Long id) {
-//        return gradeService.getGradeById(id)
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-//
-//    @PutMapping
-//    public ResponseEntity<Grade> updateGrade(@PathVariable Long id, @RequestBody Grade grade){
-//        return ResponseEntity.ok(gradeService.updateGrade(id,grade));
-//    }
-//
-//    @DeleteMapping
-//    public ResponseEntity<Void> deleteGrade(@PathVariable Long id){
-//        gradeService.deleteGrade(id);
-//        return ResponseEntity.noContent().build();
-//    }
 }

@@ -6,32 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Grade {
+public class Grade extends Student {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private char grade;
     private String status;
     private float gpa;
-
-//    public Grade (char dagrade,
-//                  String dastatus,
-//                  float dagpa)
-//    {
-//        this.grade=dagrade;
-//        this.status = dastatus;
-//        this.gpa = dagpa;
-//    }
-
-    // Getter and Setter for id
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     // Getter and Setter for grade
     public char getGrade() {
