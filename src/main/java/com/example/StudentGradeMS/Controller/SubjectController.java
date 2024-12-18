@@ -21,14 +21,6 @@ public class SubjectController {
     @Autowired
     private SubjectService subjectService;
 
-    @GetMapping("/index")
-    public String subjectIndex(Model model) {
-        List<Subject> subjects = subjectService.getAllSubjects();
-        model.addAttribute("subjects", subjects);
-        model.addAttribute("pageContent", "subject/index");
-        return "index";
-    }
-
     @Autowired
     private LecturerService lecturerService;
 
@@ -39,11 +31,12 @@ public class SubjectController {
         return ResponseEntity.ok(subjects).getBody();
     }
 
-    @GetMapping
+    @GetMapping("/index")
     public String listSubjects(Model model) {
         List<Subject> subjects = subjectService.getAllSubjects();
         model.addAttribute("subjects", subjects);
-        return "subject/index";
+        model.addAttribute("pageContent", "subject/index");
+        return "index";
     }
 
     @GetMapping("/add")
@@ -56,13 +49,14 @@ public class SubjectController {
                 .map(Lecturer::getName)
                 .toList();
         model.addAttribute("lecturerNames", lecturerNames);
-        return "subject/add";
+        model.addAttribute("pageContent", "subject/add");
+        return "index";
     }
 
     @PostMapping("/add")
     public String addSubject(@ModelAttribute Subject subject) {
         subjectService.createSubject(subject);
-        return "redirect:/subject";
+        return "redirect:/subject/index";
     }
 
     @GetMapping("/edit/{id}")
@@ -76,13 +70,14 @@ public class SubjectController {
                 .map(Lecturer::getName)
                 .toList();
         model.addAttribute("lecturerNames", lecturerNames);
-        return "subject/edit";
+        model.addAttribute("pageContent", "subject/edit");
+        return "index";
     }
 
     @PostMapping("/edit/{id}")
     public String updateSubject(@PathVariable Long id, @ModelAttribute Subject subject) {
         subjectService.updateSubject(id, subject);
-        return "redirect:/subject";
+        return "redirect:/subject/index";
     }
 
     @DeleteMapping("/api/{id}")

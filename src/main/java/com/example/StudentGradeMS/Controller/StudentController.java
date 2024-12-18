@@ -19,26 +19,21 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    // Displays the student index page with a list of all students
+    // Lists all students on the student index page
     @GetMapping("/index")
-    public String studentIndex(Model model) {
+    public String listStudents(Model model) {
         List<Student> students = studentService.getAllStudents();
         model.addAttribute("students", students);
         model.addAttribute("pageContent", "student/index");
         return "index";
     }
-    // Lists all students on the student index page
-    @GetMapping
-    public String listStudents(Model model) {
-        List<Student> students = studentService.getAllStudents();
-        model.addAttribute("students", students);
-        return "student/index";
-    }
+
     // Shows the form for adding a new student
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("student", new Student());
-        return "student/add";
+        model.addAttribute("pageContent", "student/add");
+        return "index";
     }
 
     // Handles the form submission for adding a new student
@@ -46,10 +41,11 @@ public class StudentController {
     public String addStudent(@ModelAttribute Student student, Model model) {
         try {
             studentService.createStudent(student);
-            return "redirect:/student";
+            return "redirect:/student/index";
         } catch (Exception e) {
             model.addAttribute("error", "Error occurred while adding student: " + e.getMessage());
-            return "student/add"; // Return to the add form on failure
+            model.addAttribute("pageContent", "student/add");
+            return "index"; // Return to the add form on failure
         }
     }
 
@@ -58,14 +54,15 @@ public class StudentController {
     public String showEditForm(@PathVariable int studentNo, Model model) {
         Student student = studentService.getStudentById(studentNo);
         model.addAttribute("student", student);
-        return "student/edit";
+        model.addAttribute("pageContent", "student/edit");
+        return "index";
     }
 
     // Handles the form submission for updating an existing student
     @PostMapping("/edit/{studentNo}")
     public String updateStudent(@PathVariable int studentNo, @ModelAttribute Student student) {
         studentService.updateStudent(studentNo, student);
-        return "redirect:/student";
+        return "redirect:/student/index";
     }
 
     // Provides a list of all students via an API endpoint

@@ -18,14 +18,6 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
-    @GetMapping("/index")
-    public String gradeIndex(Model model) {
-        List<Grade> grades = gradeService.getAllGrades();
-        model.addAttribute("grades", grades);
-        model.addAttribute("pageContent", "grade/index");
-        return "index";
-    }
-
     @GetMapping("/api")
     @ResponseBody
     public List<Grade> getAllGrades() {
@@ -79,31 +71,28 @@ public class GradeController {
 
     //---------------------------------------------------////---------------------------------------------------//
 
-    @GetMapping("/Grade/Index")
-    public String grade(Model model) {
-        model.addAttribute("page", "grade");
-        return "Index :: content"; // Use Thymeleaf fragment for content injection
-    }
     // View Endpoint: List all grade
-    @GetMapping
+    @GetMapping("/index")
     public String listGrades(Model model){
         List<Grade> grades = gradeService.getAllGrades();
         model.addAttribute("grades",grades);
-        return "grades/index";
+        model.addAttribute("pageContent", "grade/index");
+        return "index";
     }
 
     // View Endpoint: Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("Grades", new Grade());
-        return "grade/add";
+        model.addAttribute("pageContent", "grade/add");
+        return "index";
     }
 
     // View Endpoint: Handle add form submission
     @PostMapping("/add")
     public String addGrade(@ModelAttribute Grade grades){
         gradeService.createGrade(grades);
-        return "redirect:/grade";
+        return "redirect:/grade/index";
     }
 
     // View Endpoint: Show edit form
@@ -111,14 +100,15 @@ public class GradeController {
     public String showEditForm(@PathVariable long id, Model model) {
         Grade grade = gradeService.getGradeById(id);
         model.addAttribute("grade", grade);
-        return "grade/edit";
+        model.addAttribute("pageContent", "grade/edit");
+        return "index";
     }
 
     // View Endpoint: Handle edit form submission
     @PostMapping("/edit/{studentNo}")
     public String updateGrade(@PathVariable long id, @ModelAttribute Grade grade) {
         gradeService.updateGrade(id, grade);
-        return "redirect:/grade";
+        return "redirect:/grade/index";
     }
 
 }

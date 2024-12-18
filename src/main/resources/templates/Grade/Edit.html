@@ -7,8 +7,7 @@
 </head>
 <body>
     <div class="container mt-5">
-        <form th:action="@{/grade/edit}" th:object="${grade}" method="post">
-            <input type="hidden" th:field="*{id}" />
+        <form th:action="@{/grade/edit/{id}(id=${grade.id})}" th:object="${grade}" method="post">
             <fieldset class="border p-4">
                 <legend class="w-auto">Grade - Edit</legend>
                 <div class="mb-3">
