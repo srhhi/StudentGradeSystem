@@ -14,6 +14,9 @@ public class Grade {
     private char grade;
     private String status;
     private float gpa;
+    private int marks;
+    private String subjectName;
+    private String studentName;
 
     public long getId(){return id;}
 
@@ -44,5 +47,29 @@ public class Grade {
 
     public void setGpa(float gpa) {
         this.gpa = gpa;
+    }
+
+    public int getMarks() {
+        return marks;
+    }
+
+    public void setMarks(int marks) {
+        this.marks = marks;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getStudentName() {
+        return studentName;
     }
 }

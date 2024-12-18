@@ -22,10 +22,9 @@
                     <option th:each="subjectName : ${subjectNames}" th:value="${subjectName}" th:text="${subjectName}">Please Select</option>
                 </select>
             </div>
-
             <div class="mb-3">
-                <label for="score" class="form-label">Score</label>
-                <input type="number" class="form-control" id="score" th:field="*{score}" placeholder="Enter score (1-100)" required>
+                <label for="marks" class="form-label">Marks</label>
+                <input type="number" class="form-control" id="marks" th:field="*{marks}" placeholder="Enter marks (1-100)" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>

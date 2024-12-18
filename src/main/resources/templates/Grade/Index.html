@@ -15,18 +15,18 @@
         <a href="/grade/add" class="btn btn-primary">Add Grade</a>
     </div>
 
-    <!-- Student List Table -->
+    <!-- Grade List Table -->
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Student No</th>
             <th>Student Name</th>
             <th>Subject Name</th>
             <th>Grade</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         </thead>
-        <tbody id="student-table-body">
+        <tbody id="grade-table-body">
         <!-- Dynamic Content -->
         </tbody>
     </table>
@@ -41,12 +41,12 @@
         const tableBody = document.querySelector('#grade-table-body');
         tableBody.innerHTML = '';
 
-        students.forEach(grade => {
+        grades.forEach(grade => {
             const row = `<tr>
-                <td>${grade.studentNo}</td>
                 <td>${grade.studentName}</td>
                 <td>${grade.subjectName}</td>
                 <td>${grade.grade}</td>
+                <td>${grade.status}</td>
                 <td>
                     <a href="/grade/edit/${grade.id}" class="btn btn-warning">Edit</a>
                     <button class="btn btn-danger" onclick="deleteGrade(${grade.id})">Delete</button>

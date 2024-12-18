@@ -83,7 +83,7 @@ public class GradeController {
     // View Endpoint: Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("Grades", new Grade());
+        model.addAttribute("grade", new Grade());
         model.addAttribute("pageContent", "grade/add");
         return "index";
     }
