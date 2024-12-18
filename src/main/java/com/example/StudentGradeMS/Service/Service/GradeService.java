@@ -1,11 +1,12 @@
 package com.example.StudentGradeMS.Service.Service;
 
-import com.example.StudentGradeMS.Repository.GradeRepository;
 import com.example.StudentGradeMS.Model.Grade;
+import com.example.StudentGradeMS.Repository.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GradeService {
@@ -30,22 +31,13 @@ public class GradeService {
 
     // Update an existing grade
     public Grade updateGrade(long id, Grade newGrade) {
-        Grade grade = gradeRepository.findById(id).orElse(null);
-        if (grade != null) {
-            // Update inherited fields (from Subject)
-            grade.setCode(newGrade.getCode());
-            grade.setName(newGrade.getName());
-            grade.setCreditHours(newGrade.getCreditHours());
-            grade.setLecturerName(newGrade.getLecturerName());
-
-            // Update Grade-specific fields
-            grade.setGrade(newGrade.getGrade());
-            grade.setStatus(newGrade.getStatus());
-            grade.setGpa(newGrade.getGpa());
-            grade.setStudentNo(newGrade.getStudentNo());
-            return gradeRepository.save(grade);
-        }
-        return null;
+        return gradeRepository.findById(id)
+                .map(existingGrade -> {
+                    existingGrade.setGrade(newGrade.getGrade());
+                    existingGrade.setStatus(newGrade.getStatus());
+                    existingGrade.setGpa(newGrade.getGpa());
+                    return gradeRepository.save(existingGrade);
+                }).orElseThrow(() -> new RuntimeException("Grade not found with id " + id));
     }
 
     // Delete a grade

@@ -2,7 +2,6 @@ package com.example.StudentGradeMS.Controller;
 
 import com.example.StudentGradeMS.Model.Grade;
 import com.example.StudentGradeMS.Service.Service.GradeService;
-import com.example.StudentGradeMS.Service.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @Controller
 @RequestMapping("/grade")
 public class GradeController {
@@ -18,7 +18,6 @@ public class GradeController {
     @Autowired
     private GradeService gradeService;
 
-    // View endpoint: Display all grades
     @GetMapping("/index")
     public String gradeIndex(Model model) {
         List<Grade> grades = gradeService.getAllGrades();
@@ -27,28 +26,25 @@ public class GradeController {
         return "index";
     }
 
-    // API endpoint: Get all grades
     @GetMapping("/api")
     @ResponseBody
-    public List<Grade> getAllGradesApi() {
+    public List<Grade> getAllGrades() {
         return gradeService.getAllGrades();
     }
 
-    // API endpoint: Get grade by ID
-    @GetMapping("/api/{gradeId}")
+    @GetMapping("/api/{id}")
     @ResponseBody
-    public ResponseEntity<Grade> getGradeById(@PathVariable long gradeId) {
-        Grade grade = gradeService.getGradeById(gradeId);
+    public ResponseEntity<Grade> getGradeById(@PathVariable long id) {
+        Grade grade = gradeService.getGradeById(id);
         if (grade == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(grade);
     }
 
-    // API endpoint: Create a grade
     @PostMapping("/api")
     @ResponseBody
-    public ResponseEntity<Grade> createGradeApi(@RequestBody Grade grade) {
+    public ResponseEntity<Grade> createGrade(@RequestBody Grade grade) {
         try {
             Grade createdGrade = gradeService.createGrade(grade);
             return new ResponseEntity<>(createdGrade, HttpStatus.CREATED);
@@ -57,26 +53,22 @@ public class GradeController {
         }
     }
 
-    // API endpoint: Update a grade
     @PutMapping("/api/{id}")
     @ResponseBody
     public ResponseEntity<Grade> updateGradeApi(@PathVariable long id, @RequestBody Grade gradeDetails) {
         try {
             Grade updatedGrade = gradeService.updateGrade(id, gradeDetails);
-            if (updatedGrade != null) {
-                return new ResponseEntity<>(updatedGrade, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(updatedGrade, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // API endpoint: Delete a grade
     @DeleteMapping("/api/{id}")
     @ResponseBody
-    public ResponseEntity<HttpStatus> deleteGradeApi(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteGrade(@PathVariable long id) {
         try {
             gradeService.deleteGrade(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -85,43 +77,48 @@ public class GradeController {
         }
     }
 
-    // View Endpoint: List all grades
+    //---------------------------------------------------////---------------------------------------------------//
+
+    @GetMapping("/Grade/Index")
+    public String grade(Model model) {
+        model.addAttribute("page", "grade");
+        return "Index :: content"; // Use Thymeleaf fragment for content injection
+    }
+    // View Endpoint: List all grade
     @GetMapping
-    public String listGrades(Model model) {
+    public String listGrades(Model model){
         List<Grade> grades = gradeService.getAllGrades();
-        model.addAttribute("grades", grades);
+        model.addAttribute("grades",grades);
         return "grades/index";
     }
 
     // View Endpoint: Show add form
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("grade", new Grade());
+        model.addAttribute("Grades", new Grade());
         return "grade/add";
     }
 
     // View Endpoint: Handle add form submission
     @PostMapping("/add")
-    public String addGrade(@ModelAttribute Grade grade) {
-        gradeService.createGrade(grade);
+    public String addGrade(@ModelAttribute Grade grades){
+        gradeService.createGrade(grades);
         return "redirect:/grade";
     }
 
     // View Endpoint: Show edit form
-    @GetMapping("/edit/{id}")
+    @GetMapping("/edit/{studentNo}")
     public String showEditForm(@PathVariable long id, Model model) {
         Grade grade = gradeService.getGradeById(id);
-        if (grade == null) {
-            return "redirect:/grade"; // Redirect if grade is not found
-        }
         model.addAttribute("grade", grade);
         return "grade/edit";
     }
 
     // View Endpoint: Handle edit form submission
-    @PostMapping("/edit/{id}")
+    @PostMapping("/edit/{studentNo}")
     public String updateGrade(@PathVariable long id, @ModelAttribute Grade grade) {
         gradeService.updateGrade(id, grade);
         return "redirect:/grade";
     }
+
 }
