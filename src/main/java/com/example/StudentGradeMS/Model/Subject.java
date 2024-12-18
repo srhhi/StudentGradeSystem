@@ -1,11 +1,9 @@
 package com.example.StudentGradeMS.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED) // Options: SINGLE_TABLE, JOINED, TABLE_PER_CLASS
 public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
