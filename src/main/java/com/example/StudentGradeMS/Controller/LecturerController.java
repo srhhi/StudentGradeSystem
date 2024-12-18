@@ -19,35 +19,28 @@ public class LecturerController {
     @Autowired
     private LecturerService lecturerService;
 
-    // Displays the lecturer index page with a list of all lecturers
+    // Lists all lecturers on the lecturer index page
     @GetMapping("/index")
-    public String lecturerIndex(Model model) {
+    public String listLecturers(Model model) {
         List<Lecturer> lecturers = lecturerService.getAllLecturers();
         model.addAttribute("lecturers", lecturers);
         model.addAttribute("pageContent", "lecturer/index");
         return "index";
     }
 
-    // Lists all lecturers on the lecturer index page
-    @GetMapping
-    public String listLecturers(Model model) {
-        List<Lecturer> lecturers = lecturerService.getAllLecturers();
-        model.addAttribute("lecturers", lecturers);
-        return "lecturer/index";
-    }
-
     // Shows the form for adding a new lecturer
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("lecturer", new Lecturer());
-        return "lecturer/add";
+        model.addAttribute("pageContent", "lecturer/add");
+        return "index";
     }
 
     // Handles the form submission for adding a new lecturer
     @PostMapping("/add")
     public String addLecturer(@ModelAttribute Lecturer lecturer) {
         lecturerService.createLecturer(lecturer);
-        return "redirect:/lecturer";
+        return "redirect:/lecturer/index";
     }
 
     // Shows the form for editing an existing lecturer
@@ -55,14 +48,15 @@ public class LecturerController {
     public String showEditForm(@PathVariable Long id, Model model) {
         Lecturer lecturer = lecturerService.getLecturerById(id);
         model.addAttribute("lecturer", lecturer);
-        return "lecturer/edit";
+        model.addAttribute("pageContent", "lecturer/edit");
+        return "index";
     }
 
     // Handles the form submission for updating an existing lecturer
     @PostMapping("/edit/{id}")
     public String updateLecturer(@PathVariable Long id, @ModelAttribute Lecturer lecturer) {
         lecturerService.updateLecturer(id, lecturer);
-        return "redirect:/lecturer";
+        return "redirect:/lecturer/index";
     }
 
     // Provides a list of all lecturers via an API endpoint
