@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Grade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private char grade;
     private String status;
