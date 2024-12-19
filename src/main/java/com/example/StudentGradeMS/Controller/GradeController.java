@@ -109,17 +109,22 @@ public class GradeController {
     }
 
     // View Endpoint: Show edit form
-    @GetMapping("/edit/{studentNo}")
+    @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable long id, Model model) {
         Grade grade = gradeService.getGradeById(id);
         model.addAttribute("grade", grade);
         model.addAttribute("pageContent", "grade/edit");
+        List<Student> students = studentService.getAllStudents(); // Fetch all students
+        model.addAttribute("studentNames", students); // Add students to the model
+        List<Subject> subjects = subjectService.getAllSubjects(); // Fetch all subjects
+        model.addAttribute("subjectNames", subjects); // Add students to the model
         return "index";
     }
 
     // View Endpoint: Handle edit form submission
-    @PostMapping("/edit/{studentNo}")
+    @PostMapping("/edit/{id}")
     public String updateGrade(@PathVariable long id, @ModelAttribute Grade grade) {
+        gradeService.calculateGradeDetails(grade);
         gradeService.updateGrade(id, grade);
         return "redirect:/grade/index";
     }

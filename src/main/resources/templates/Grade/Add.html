@@ -24,7 +24,7 @@
             <div class="mb-3">
                 <label for="subjectName" class="form-label">Subject Name</label>
                 <select class="form-select" th:field="*{subjectName}" id="subjectName" required>
-                    <option value="0" disabled selected>Please Select</option>
+                    <option value="0" disabled selected="selected">Please Select</option>
                     <option th:each="subject : ${subjectNames}"
                             th:value="${subject.name}"
                             th:text="${subject.name}"></option>
