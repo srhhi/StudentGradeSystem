@@ -1,7 +1,11 @@
 package com.example.StudentGradeMS.Controller;
 
 import com.example.StudentGradeMS.Model.Grade;
+import com.example.StudentGradeMS.Model.Student;
+import com.example.StudentGradeMS.Model.Subject;
 import com.example.StudentGradeMS.Service.Service.GradeService;
+import com.example.StudentGradeMS.Service.Service.StudentService;
+import com.example.StudentGradeMS.Service.Service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,10 @@ public class GradeController {
 
     @Autowired
     private GradeService gradeService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private SubjectService subjectService;
 
     @GetMapping("/api")
     @ResponseBody
@@ -85,12 +93,17 @@ public class GradeController {
     public String showAddForm(Model model) {
         model.addAttribute("grade", new Grade());
         model.addAttribute("pageContent", "grade/add");
+        List<Student> students = studentService.getAllStudents(); // Fetch all students
+        model.addAttribute("studentNames", students); // Add students to the model
+        List<Subject> subjects = subjectService.getAllSubjects(); // Fetch all subjects
+        model.addAttribute("subjectNames", subjects); // Add students to the model
         return "index";
     }
 
     // View Endpoint: Handle add form submission
     @PostMapping("/add")
     public String addGrade(@ModelAttribute Grade grades){
+        gradeService.calculateGradeDetails(grades);
         gradeService.createGrade(grades);
         return "redirect:/grade/index";
     }

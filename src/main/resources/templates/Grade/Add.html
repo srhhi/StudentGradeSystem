@@ -13,18 +13,41 @@
             <div class="mb-3">
                 <label for="studentName" class="form-label">Student Name</label>
                 <select class="form-select" th:field="*{studentName}" id="studentName" required>
-                    <option th:each="studentName : ${studentNames}" th:value="${studentName}" th:text="${studentName}">Please Select</option>
+
+                    <option value="" disabled selected>Please Select</option>
+                    <option th:each="student : ${studentNames}"
+                            th:value="${student.name}"
+                            th:text="${student.name}"></option>
+<!--                    <option th:each="studentName : ${studentNames}" th:value="${studentName}" th:text="${studentName}">Please Select</option>-->
                 </select>
             </div>
             <div class="mb-3">
                 <label for="subjectName" class="form-label">Subject Name</label>
                 <select class="form-select" th:field="*{subjectName}" id="subjectName" required>
-                    <option th:each="subjectName : ${subjectNames}" th:value="${subjectName}" th:text="${subjectName}">Please Select</option>
+                    <option value="0" disabled selected>Please Select</option>
+                    <option th:each="subject : ${subjectNames}"
+                            th:value="${subject.name}"
+                            th:text="${subject.name}"></option>
+<!--                    <option th:each="subjectName : ${subjectNames}" th:value="${subjectName}" th:text="${subjectName}">Please Select</option>-->
                 </select>
             </div>
             <div class="mb-3">
                 <label for="marks" class="form-label">Marks</label>
-                <input type="number" class="form-control" id="marks" th:field="*{marks}" placeholder="Enter marks (1-100)" required>
+<!--                <input type="number" class="form-control" id="marks" th:field="*{marks}" placeholder="Enter marks (1-100)" required>-->
+<!--                <input value="" type="text" class="form-control" id="marks" th:field="*{marks}" placeholder="Enter marks (1-100)" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">-->
+                <input value="" type="text" class="form-control" id="marks" th:field="*{marks}" placeholder="Enter marks (1-100)" required oninput="validateMarks(this)">
+                <script>
+                    function validateMarks(input) {
+                        // Remove non-numeric characters
+                        input.value = input.value.replace(/[^0-9]/g, '');
+                        // Limit the value to the range 1-100
+                        if (input.value !== '') {
+                            const value = parseInt(input.value, 10);
+                            if (value < 1) input.value = 1;
+                            if (value > 100) input.value = 100;
+                        }
+                    }
+                </script>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
