@@ -24,7 +24,7 @@
 <!--            </div>-->
             <div class="mb-3">
                 <label for="studentName" class="form-label">Student Name</label>
-                <select class="form-select" th:field="*{studentName}" id="studentName" required>
+                <select class="form-select" th:field="*{studentName}" id="studentName" readonly>
                     <option value="" disabled selected>Please Select</option>
                     <option th:each="student : ${studentNames}"
                             th:value="${student.name}"
@@ -36,7 +36,7 @@
 
             <div class="mb-3">
                 <label for="subjectName" class="form-label">Subject Name</label>
-                <select class="form-select" th:field="*{subjectName}" id="subjectName" required>
+                <select class="form-select" th:field="*{subjectName}" id="subjectName" readonly>
                     <option value="" disabled selected>Please Select</option>
                     <option th:each="subject : ${subjectNames}"
                             th:value="${subject.name}"
@@ -65,7 +65,7 @@
 
             <!-- Submit and Cancel Buttons -->
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+            <a href="/grade/index" class="btn btn-secondary">Cancel</a>
         </fieldset>
     </form>
 </div>
